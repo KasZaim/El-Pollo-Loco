@@ -11,6 +11,7 @@ class Character extends MovableObject {
         '/img/2_character_pepe/2_walk/W-25.png',
         '/img/2_character_pepe/2_walk/W-26.png'
     ];
+    walking_sound = new Audio('audio/Walking.mp3');
 
     world;
 
@@ -22,24 +23,25 @@ class Character extends MovableObject {
     }
     animate() {
         setInterval(() => {
-            if (this.World.keyboard.RIGHT) {
+            this.walking_sound.pause();
+            if (this.World.keyboard.RIGHT && this.x < this.World.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
+                this.walking_sound.play();
             }
-            if (this.World.keyboard.LEFT) {
+            if (this.World.keyboard.LEFT && this.x > 0) {
                 this.x -= this.speed;
                 this.otherDirection = true;
+                this.walking_sound.play();
             }
+            this.World.camera_x = -this.x +100;
         }, 1000 / 60)
 
         setInterval(() => {
             if (this.World.keyboard.RIGHT || this.World.keyboard.LEFT) {
 
                 //Walking animation
-                let i = this.currrentImage % this.IMAGES_PEPE_WALKING.length;
-                let path = this.IMAGES_PEPE_WALKING[i];
-                this.img = this.imageCache[path];
-                this.currrentImage++;
+                this.playAnimation(this.IMAGES_PEPE_WALKING)
             }
         }, 40);
     }

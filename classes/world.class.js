@@ -3,23 +3,8 @@ class World {
     canvas;
     character = new Character();
     keyboard;
-    enemies = [
-        new chicken(),
-        new chicken(),
-        new chicken(),
-    ];
-    clouds = [
-        new cloud()
-    ];
-    backgroundObjects = [
-        new BackgroundObjects('img/5_background/layers/air.png', 0),
-        new BackgroundObjects('img/5_background/layers/3_third_layer/1.png', 0),
-        new BackgroundObjects('img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObjects('img/5_background/layers/1_first_layer/1.png', 0),
-        new BackgroundObjects('img/5_background/layers/3_third_layer/2.png', 0),
-        new BackgroundObjects('img/5_background/layers/2_second_layer/2.png', 0),
-        new BackgroundObjects('img/5_background/layers/1_first_layer/2.png', 0),
-    ];
+    camera_x = 0;
+    level = level1;
 
     constructor(canvas,keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
@@ -36,12 +21,14 @@ class World {
     draw() {
         let self = this;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Canvas wird entleert
-        this.addObjectsToMap(this.backgroundObjects);
-        this.addObjectsToMap(this.clouds);
+        this.ctx.translate(this.camera_x, 0);
+        
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character) // 'this.' weil die funktion außerhalb von draw() ist
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.enemies);
         
-        
+        this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(function () {
             self.draw();
