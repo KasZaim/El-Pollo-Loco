@@ -5,6 +5,8 @@ class World {
     keyboard;
     camera_x = 0;
     level = level1;
+    statusbar = new Statusbar();
+    throwableObjects = [new ThrowableObjects()];
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
@@ -23,27 +25,30 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
                     this.character.hitted();
-                    console.log('your energy level is', this.character.energy)
+                    this.statusbar.setPercentage(this.character.energy)
                 }
             }
             )
         }, 200);
     }
     draw() {
-        let self = this;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Canvas wird entleert
-        this.ctx.translate(this.camera_x, 0);
-
+       
+        this.ctx.translate(this.camera_x, 0); 
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar)
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.clouds);
-        this.addToMap(this.character) // 'this.' weil die funktion außerhalb von draw() ist
+        this.addToMap(this.character)
         this.addObjectsToMap(this.level.enemies);
-
+        this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(function () {
             self.draw();
         })
+        let self = this;
     }
     addObjectsToMap(objects) {
         objects.forEach(object => {
