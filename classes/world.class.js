@@ -6,7 +6,7 @@ class World {
     camera_x = 0;
     level = level1;
     statusbar = new Statusbar();
-    throwableObjects = [new ThrowableObjects()];
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
@@ -14,23 +14,38 @@ class World {
             this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.World = this;
     }
-    checkCollisions() {
+    
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)) {
-                    this.character.hitted();
-                    this.statusbar.setPercentage(this.character.energy)
-                }
-            }
-            )
+            this.checkCollisions();
+            this.checkThrowObject();
+            
+           
         }, 200);
     }
+
+    checkThrowObject(){
+        if (this.keyboard.SPACE) {
+            let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if(this.character.isColliding(enemy)) {
+                this.character.hitted();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        } )
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Canvas wird entleert
        

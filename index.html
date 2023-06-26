@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,15 +20,22 @@
     <script src="classes/throwable-objects.js"></script>
     <script src="classes/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
-    
+
     <script src="js/game.js"></script>
 </head>
 
 <body onload="init()">
     <h1>El Pollo Loco</h1>
-    
-    <canvas id="canvas" width="720px" height="480px">
+    <div class="content">
+        <div class="start-screen" id="intro"onclick="startGame()" >
+            <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
+        </div>
 
-    </canvas>
+        <canvas id="canvas" width="720px" height="480px">
+
+        </canvas>
+    </div>
+
 </body>
+
 </html>
