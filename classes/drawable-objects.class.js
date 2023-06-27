@@ -25,7 +25,7 @@ loadImages(arr) {
 }
 
 drawFrame(ctx) {
-    if (this instanceof Character || this instanceof chicken || this instanceof Endboss) {
+    if (this instanceof Character || this instanceof chicken || this instanceof Endboss ) {
         ctx.beginPath();
         ctx.lineWidth = "6";
         ctx.strokeStyle = "red";

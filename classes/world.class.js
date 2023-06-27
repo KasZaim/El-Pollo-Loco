@@ -7,11 +7,12 @@ class World {
     level = level1;
     statusbar = new Statusbar();
     throwableObjects = [];
+    
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
-            this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.run();
@@ -44,6 +45,12 @@ class World {
                 this.statusbar.setPercentage(this.character.energy)
             }
         } )
+        this.level.coins.forEach((coin) => {
+            if(this.character.isColliding(coin)) {
+                this.character.hitted();
+                this.statusbar.setPercentage(this.character.energy)
+            }
+        } )
     }
 
     draw() {
@@ -58,6 +65,7 @@ class World {
         this.addToMap(this.character)
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins)
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(function () {

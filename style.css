@@ -12,7 +12,7 @@ body{
     src: url('fonts/Zabars.ttf') format('truetype'); 
 }  
 h1{
-    font-size: 48px;
+    font-size: 62px;
     text-shadow: 4px 4px rgba(0, 0, 0, 0.4);
 }
 .content{
@@ -40,4 +40,7 @@ canvas{
 .start-screen img{
     height: 100%;
     width: 100%;
+}
+.d-none{
+    display: none;
 }

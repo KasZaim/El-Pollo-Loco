@@ -1,12 +1,20 @@
 let canvas;
 let keyboard = new Keyboard();
 let world;
+BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
+
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas,keyboard)
 
     console.log('My Character is', world.character)
+}
+function startGame(){
+    document.getElementById('start-screen').classList.add('d-none');
+    initLevel();
+    this.BACKGROUND_MUSIC.volume = 0.7;
+    this.BACKGROUND_MUSIC.play();
 }
 
 window.addEventListener("keydown", (e) => {
