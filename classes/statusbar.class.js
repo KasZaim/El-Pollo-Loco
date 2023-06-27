@@ -1,6 +1,6 @@
 class Statusbar extends DrawableObjects{
 
-    IMAGES = [
+    IMAGES= [
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/40.png',
@@ -23,24 +23,25 @@ class Statusbar extends DrawableObjects{
 
     setPercentage(life){
         this.life = life;
-        let imagePath = this.IMAGES[this.resolveImageIndex()];
+        let imagePath = this.IMAGES[this.resolveImageIndex(life)];
         this.img = this.imageCache[imagePath]
     }
 
-    resolveImageIndex(){
-            if (this.life == 100) {
+    resolveImageIndex(percentage){
+        
+            if (percentage == 100) {
                 return 5;
             }
-            else if (this.life > 80) {
+            else if (percentage > 80) {
                 return 4;
             }
-            else if (this.life > 60) {
+            else if (percentage > 60) {
                 return 3;
             }
-            else if (this.life > 40) {
+            else if (percentage > 40) {
                 return 2;
             }
-            else if (this.life > 20) {
+            else if (percentage > 20) {
                 return 1;
             }
             else{

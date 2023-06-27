@@ -5,7 +5,6 @@ class MovableObject extends DrawableObjects {
     speedY = 0;
     acceleration = 2.5;
     lastHit = 0;
-    
 
     applyGravity() {
         setInterval(() => {
@@ -23,15 +22,20 @@ class MovableObject extends DrawableObjects {
             return this.y < 150
     }}
 
-    
+    generateRandomPosition(x){
+        this.x = x;
+        this.x = this.x + Math.random() * 1500;
+        this.y = this.y + Math.random() * 200;
+    }
     
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-        this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height;
+        return this.x < mo.x + mo.width &&
+            this.x + this.width > mo.x &&
+            this.y < mo.y + mo.height &&
+            this.y + this.height > mo.y;
     }
-    hitted() {
+    
+    hitted(){
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
@@ -41,7 +45,7 @@ class MovableObject extends DrawableObjects {
     }
     isHurt(){
         let timePassed = new Date().getTime()- this.lastHit;
-        timePassed = timePassed / 1000;
+        timePassed = timePassed / 1000; // wird in Sekunden angezeigt
         return timePassed < 1;
     }
     isDead() {
@@ -65,5 +69,4 @@ class MovableObject extends DrawableObjects {
         this.img = this.imageCache[path];
         this.currrentImage++;
     }
-   
 }

@@ -39,6 +39,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
     walking_sound = new Audio('audio/Walking.mp3');
+    HIT_SOUND = new Audio('audio/ouch.mp3');
 
     world;
 

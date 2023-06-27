@@ -38,15 +38,25 @@ level1 = new Level([
     ],
 
     [
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
-        new Coins(),
+        new Coins(50),
+        new Coins(200),
+        new Coins(550),
+        new Coins(450),
+        new Coins(650),
+        new Coins(570),
+        new Coins(100),
+        new Coins(900),
+        new Coins(800),
+        new Coins(700)
         
+    ],
+    [
+        new Bottles(106),
+        new Bottles(508),
+        new Bottles(401),
+        new Bottles(806),
+        new Bottles(357),
+        new Bottles(654),
     ]
 
 );}

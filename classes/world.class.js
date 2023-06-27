@@ -6,8 +6,8 @@ class World {
     camera_x = 0;
     level = level1;
     statusbar = new Statusbar();
+    coinsbar = new Coinsbar();
     throwableObjects = [];
-    
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
@@ -33,24 +33,49 @@ class World {
 
     checkThrowObject(){
         if (this.keyboard.SPACE) {
-            let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
+            let bottle = new ThrowableObjects(this.character.x + 200, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
     }
 
     checkCollisions(){
+        this.checkChickenCollision();
+        this.checkCoinCollision();
+    }
+
+    checkChickenCollision(){
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
+                this.character.HIT_SOUND.play();
             }
         } )
+    }
+
+    checkCoinCollision(){
         this.level.coins.forEach((coin) => {
             if(this.character.isColliding(coin)) {
-                this.character.hitted();
-                this.statusbar.setPercentage(this.character.energy)
+                this.coinsbar.collected += 10; 
+                this.coinsbar.setPercentage(this.coinsbar.collected);
+                this.deleteAfterCollected(this.level.coins, coin);
+                this.coinsbar.COLLECTING_SOUND.play();
             }
-        } )
+        })
+    }
+    checkBottlesCollision(){
+        this.level.bottles.forEach((bottle) => {
+            if(this.character.isColliding(bottle)) {
+                this.coinsbar.collected += 10; 
+                this.coinsbar.setPercentage(this.coinsbar.collected);
+                this.deleteAfterCollected(this.level.coins, coin);
+                this.coinsbar.COLLECTING_SOUND.play();
+            }
+        })
+    }
+
+    deleteAfterCollected(object, item) {
+        object.splice(object.indexOf(item), 1);
     }
 
     draw() {
@@ -59,13 +84,15 @@ class World {
         this.ctx.translate(this.camera_x, 0); 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar)
+        this.addToMap(this.statusbar);
+        this.addToMap(this.coinsbar);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.clouds);
-        this.addToMap(this.character)
+        this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.coins)
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(function () {
