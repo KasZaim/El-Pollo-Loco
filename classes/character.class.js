@@ -1,9 +1,5 @@
 class Character extends MovableObject {
-    height = 280;
-    width = 180;
-    y = 150;
-    speed = 10;
-    energy = 100;
+
     IMAGES_PEPE_WALKING = [
         '/img/2_character_pepe/2_walk/W-21.png',
         '/img/2_character_pepe/2_walk/W-22.png',
@@ -40,8 +36,13 @@ class Character extends MovableObject {
     ];
     walking_sound = new Audio('audio/Walking.mp3');
     HIT_SOUND = new Audio('audio/ouch.mp3');
-
-    world;
+    height = 280;
+    width = 180;
+    y = 150;
+    speed = 10;
+    energy = 100;
+    collectedBottles = 0;
+    
 
     constructor() {
         super().loadImg('/img/2_character_pepe/2_walk/W-21.png')

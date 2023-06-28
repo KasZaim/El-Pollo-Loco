@@ -5,7 +5,7 @@ level1 = new Level([
     new chicken(),
     new chicken(),
     new chicken(),
-    new Endboss()
+    
 ],
     [
         new cloud()
@@ -56,7 +56,8 @@ level1 = new Level([
         new Bottles(401),
         new Bottles(806),
         new Bottles(357),
-        new Bottles(654),
+    ],[
+        new Endboss()
     ]
 
 );}

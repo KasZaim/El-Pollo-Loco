@@ -7,7 +7,10 @@ class World {
     level = level1;
     statusbar = new Statusbar();
     coinsbar = new Coinsbar();
+    bottlesbar = new Bottlesbar ();
+    endboss= this.level.endboss[0];
     throwableObjects = [];
+    
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
@@ -20,32 +23,45 @@ class World {
 
     setWorld() {
         this.character.World = this;
+        this.endboss.world = this;
+         
     }
-    
+
     run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObject();
-            
            
         }, 200);
     }
 
     checkThrowObject(){
-        if (this.keyboard.SPACE) {
+        if (this.keyboard.SPACE && this.character.collectedBottles > 0) {
             let bottle = new ThrowableObjects(this.character.x + 200, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.character.collectedBottles--
         }
     }
 
     checkCollisions(){
         this.checkChickenCollision();
         this.checkCoinCollision();
+        this.checkEndbossCollision();
+        this.checkBottlesCollision();
     }
 
     checkChickenCollision(){
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
+                this.character.hitted();
+                this.statusbar.setPercentage(this.character.energy)
+                this.character.HIT_SOUND.play();
+            }
+        } )
+    }
+    checkEndbossCollision(){
+        this.level.endboss.forEach((endboss) => {
+            if(this.character.isColliding(endboss)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
                 this.character.HIT_SOUND.play();
@@ -66,10 +82,12 @@ class World {
     checkBottlesCollision(){
         this.level.bottles.forEach((bottle) => {
             if(this.character.isColliding(bottle)) {
-                this.coinsbar.collected += 10; 
-                this.coinsbar.setPercentage(this.coinsbar.collected);
-                this.deleteAfterCollected(this.level.coins, coin);
-                this.coinsbar.COLLECTING_SOUND.play();
+                this.bottlesbar.collectedBottles += 20; 
+                this.bottlesbar.setPercentage(this.bottlesbar.collectedBottles);
+                this.deleteAfterCollected(this.level.bottles, bottle);
+                this.bottlesbar.COLLECTING_SOUND.play();
+
+                this.character.collectedBottles++
             }
         })
     }
@@ -86,10 +104,12 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusbar);
         this.addToMap(this.coinsbar);
+        this.addToMap(this.bottlesbar);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
