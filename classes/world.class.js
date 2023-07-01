@@ -7,9 +7,10 @@ class World {
     level = level1;
     statusbar = new Statusbar();
     coinsbar = new Coinsbar();
-    bottlesbar = new Bottlesbar ();
-    endboss= this.level.endboss[0];
+    bottlesbar = new Bottlesbar();
+    endboss = this.level.endboss[0];
     throwableObjects = [];
+    bottlethrew = false;
     
 
     constructor(canvas, keyboard) {
@@ -24,70 +25,88 @@ class World {
     setWorld() {
         this.character.World = this;
         this.endboss.world = this;
-         
     }
 
     run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObject();
-           
         }, 200);
     }
 
-    checkThrowObject(){
+    checkThrowObject() {
         if (this.keyboard.SPACE && this.character.collectedBottles > 0) {
             let bottle = new ThrowableObjects(this.character.x + 200, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.character.collectedBottles--
+            this.bottlesbar.bottlesToShow -= 20;
+            this.bottlesbar.setPercentage(this.bottlesbar.bottlesToShow);
+
+            this.checkIfBottleHitEndboss(bottle)
+            this.checkIfBottleHitChicken(bottle);
         }
     }
 
-    checkCollisions(){
+    checkIfBottleHitChicken(bottle) {
+        this.level.enemies.forEach((enemy) => {
+            if (bottle.isColliding(enemy)) {
+                bottle.splash();
+                bottle.bottleDestroyed = true;
+            }
+        });
+    }
+
+    checkIfBottleHitEndboss(bottle) {
+        if (bottle.isColliding(this.level.endboss[0])) {
+            bottle.splash(this.level.endboss[0].x, this.level.endboss[0].y);
+            bottle.bottleDestroyed = true;
+        };
+    }
+
+    checkCollisions() {
         this.checkChickenCollision();
         this.checkCoinCollision();
         this.checkEndbossCollision();
-        this.checkBottlesCollision();
+        this.checkBottlesCollection();
     }
 
-    checkChickenCollision(){
+    checkChickenCollision() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
                 this.character.HIT_SOUND.play();
             }
-        } )
+        })
     }
-    checkEndbossCollision(){
+    checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
-            if(this.character.isColliding(endboss)) {
+            if (this.character.isColliding(endboss)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
                 this.character.HIT_SOUND.play();
             }
-        } )
+        })
     }
 
-    checkCoinCollision(){
+    checkCoinCollision() {
         this.level.coins.forEach((coin) => {
-            if(this.character.isColliding(coin)) {
-                this.coinsbar.collected += 10; 
+            if (this.character.isColliding(coin)) {
+                this.coinsbar.collected += 10;
                 this.coinsbar.setPercentage(this.coinsbar.collected);
                 this.deleteAfterCollected(this.level.coins, coin);
                 this.coinsbar.COLLECTING_SOUND.play();
             }
         })
     }
-    checkBottlesCollision(){
+    checkBottlesCollection() {
         this.level.bottles.forEach((bottle) => {
-            if(this.character.isColliding(bottle)) {
-                this.bottlesbar.collectedBottles += 20; 
-                this.bottlesbar.setPercentage(this.bottlesbar.collectedBottles);
+            if (this.character.isColliding(bottle)) {
+                this.bottlesbar.bottlesToShow += 20;
+                this.character.collectedBottles++
+                this.bottlesbar.setPercentage(this.bottlesbar.bottlesToShow);
                 this.deleteAfterCollected(this.level.bottles, bottle);
                 this.bottlesbar.COLLECTING_SOUND.play();
-
-                this.character.collectedBottles++
             }
         })
     }
@@ -98,8 +117,8 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Canvas wird entleert
-       
-        this.ctx.translate(this.camera_x, 0); 
+
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusbar);

@@ -36,9 +36,9 @@ class Character extends MovableObject {
     ];
     walking_sound = new Audio('audio/Walking.mp3');
     HIT_SOUND = new Audio('audio/ouch.mp3');
-    height = 280;
-    width = 180;
-    y = 150;
+    height = 240;
+    width = 150;
+    y = 190;
     speed = 10;
     energy = 100;
     collectedBottles = 0;

@@ -19,7 +19,7 @@ class MovableObject extends DrawableObjects {
         if (this instanceof ThrowableObjects) { //throwableobject should always fall
             return true
         }else{
-            return this.y < 150
+            return this.y < 190
     }}
 
     generateRandomPosition(x){
@@ -69,4 +69,5 @@ class MovableObject extends DrawableObjects {
         this.img = this.imageCache[path];
         this.currrentImage++;
     }
+    
 }

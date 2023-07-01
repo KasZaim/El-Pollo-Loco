@@ -9,7 +9,7 @@ class Bottlesbar extends Statusbar{
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
     ]
 
-    collectedBottles = 0;
+    bottlesToShow = 0;
     COLLECTING_SOUND = new Audio('audio/wohoo.mp3')
 
     constructor(){
