@@ -75,6 +75,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
+                this.character.HIT_SOUND.volume = 0.3;
                 this.character.HIT_SOUND.play();
             }
         })
@@ -84,6 +85,7 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy)
+                this.character.HIT_SOUND.volume = 0.3;
                 this.character.HIT_SOUND.play();
             }
         })
@@ -95,6 +97,7 @@ class World {
                 this.coinsbar.collected += 10;
                 this.coinsbar.setPercentage(this.coinsbar.collected);
                 this.deleteAfterCollected(this.level.coins, coin);
+                this.coinsbar.COLLECTING_SOUND.volume = 0.2;
                 this.coinsbar.COLLECTING_SOUND.play();
             }
         })
@@ -106,6 +109,7 @@ class World {
                 this.character.collectedBottles++
                 this.bottlesbar.setPercentage(this.bottlesbar.bottlesToShow);
                 this.deleteAfterCollected(this.level.bottles, bottle);
+                this.bottlesbar.COLLECTING_SOUND.volume = 0.3;
                 this.bottlesbar.COLLECTING_SOUND.play();
             }
         })

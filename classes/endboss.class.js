@@ -25,6 +25,7 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_ENDBOSS_SPAWNING);
         this.loadImages(this.IMAGES_ENDBOSS_WALKING);
         this.x = 2400;
+        this.speed = 0.5;
         this.animate();
         
     }
@@ -34,9 +35,12 @@ class Endboss extends MovableObject{
         setInterval( () =>{
             if (i < 8) {
                     this.playAnimation(this.IMAGES_ENDBOSS_SPAWNING);
-            } else {
+            } else if (this.hadFirstContact) {
                 this.playAnimation(this.IMAGES_ENDBOSS_WALKING)
-            }
+                setInterval(() => {
+                    this.moveLeft();
+                }, 1000 / 60)
+            } 
             i++;
             if (this.world.character.x > 2000 && !this.hadFirstContact) {
                 i = 0;

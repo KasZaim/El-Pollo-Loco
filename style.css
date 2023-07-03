@@ -1,57 +1,99 @@
-body{
+body {
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: zabars;
     background-image: url('img/Wüste.png');
     height: 100vh;
 }
+
 @font-face {
     font-family: 'zabars';
-    src: url('fonts/Zabars.ttf') format('truetype'); 
-}  
-h1{
+    src: url('fonts/Zabars.ttf') format('truetype');
+}
+
+h1 {
     font-size: 62px;
     text-shadow: 4px 4px rgba(0, 0, 0, 0.4);
 }
-.content{
-    width: 720px;
-    height: 480px;
+
+.content {
+    position: relative;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
-canvas{
+
+canvas {
     background-color: black;
     position: relative;
     display: block;
 }
+
 @media only screen and (max-width:720px) {
-    canvas{
+    canvas {
         width: 100%;
     }
 }
+
 @media only screen and (max-height:480px) {
-    canvas{
+    canvas {
         height: 100vh;
     }
 }
 
-.start-screen{
+.start-screen {
     height: 480px;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 5;
-    cursor: pointer;
 }
-.start-screen img{
+
+.start-screen img {
     height: 100%;
     width: 100%;
 }
-.d-none{
-    display: none;
+
+.d-none {
+    display: none !important;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 10;
+    top: 7px;
+    width: 720px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-buttons img {
+    height: 30px;
+}
+
+.setting-buttons {
+    background-color: orange;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.settings {
+    display: flex;
+    gap: 14px;
+}
+
+#play-game {
+    height: 90px;
+    width: 90px;
 }
