@@ -40,12 +40,28 @@
 
         </canvas>
         <div class="overlay" id="overlay">
-            <div class="settings">
-                <button class="setting-buttons" onclick="openFullScreen()"><img src="img/ICONS/fit-to-width-64.png"></button>
-                <button class="setting-buttons" onclick="mute()"><img id="mute-img" src="img/ICONS/speaker-48.png"></button>
+            <div class="top">
+                <div class="settings">
+                    <button class="setting-buttons" onclick="openFullScreen()"><img
+                            src="img/ICONS/fit-to-width-64.png"></button>
+                    <button class="setting-buttons" onclick="mute()"><img id="mute-img"
+                            src="img/ICONS/speaker-48.png"></button>
+                </div>
+                <button class="setting-buttons" onclick="startGame(), init()" id="play-game"><img
+                        src="img/ICONS/play-48.png" alt=""></button>
             </div>
-            <button class="setting-buttons" onclick="startGame(), init()" id="play-game"><img
-                    src="img/ICONS/play-48.png" alt=""></button>
+
+        </div>
+        <div class="overlay-bottom ">
+            <div class="control-buttons">
+                <button id="btnLeft" class="setting-buttons"><img src="img/ICONS/icons8-eingekreistes-rangabzeichen-links-100.png" alt=""></button>
+                <button id="btnRight" class="setting-buttons"><img src="img/ICONS/icons8-eingekreistes-rangabzeichen-rechts-100.png" alt=""></button>
+            </div>
+            <div class="action-buttons">
+                <button id="btnUp" class="setting-buttons"><img src="img/ICONS/arrow-up-6-48.png" alt=""></button>
+                <button id="btnThrow" class="setting-buttons"><img src="img/ICONS/beer-bottle-48.png" alt=""></button>
+            </div>
+
         </div>
     </div>
 

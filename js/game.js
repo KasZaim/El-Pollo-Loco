@@ -16,6 +16,7 @@ function startGame() {
     initLevel();
     this.BACKGROUND_MUSIC.volume = globalVolume;
     this.BACKGROUND_MUSIC.play();
+    btnPressEvents();
 }
 
 window.addEventListener("keydown", (e) => {
@@ -35,6 +36,43 @@ window.addEventListener("keydown", (e) => {
         keyboard.SPACE = true;
     }
 });
+
+function btnPressEvents() {
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+    document.getElementById('btnUp').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.UP = true;
+    });
+    document.getElementById('btnUp').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.UP = false;
+    });
+    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+}
+
+
 
 window.addEventListener("keyup", (e) => {
     if (e.keyCode == 37) {
