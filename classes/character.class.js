@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-
+ 
     IMAGES_PEPE_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -42,6 +42,13 @@ class Character extends MovableObject {
     speed = 10;
     energy = 100;
     collectedBottles = 0;
+
+    offset = {
+        x: 20,
+        y: 94,
+        width:30,
+        height: 5
+    };
     
 
     constructor() {
@@ -67,8 +74,9 @@ class Character extends MovableObject {
             }
             if (this.World.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
+                
             }
-            this.World.camera_x = -this.x + 100;
+            this.World.camera_x = -this.x + 50;
         }, 1000 / 60)
 
         setInterval(() => {

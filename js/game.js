@@ -32,8 +32,27 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode == 40) {
         keyboard.DOWN = true;
     }
-    if (e.keyCode == 32) {
+    if (e.keyCode == 32 && !keyboard.SPACE) {
         keyboard.SPACE = true;
+        world.checkThrowObject();
+    }
+});
+
+window.addEventListener("keyup", (e) => {
+    if (e.keyCode == 37) {
+        keyboard.LEFT = false;
+    }
+    if (e.keyCode == 38) {
+        keyboard.UP = false;
+    }
+    if (e.keyCode == 39) {
+        keyboard.RIGHT = false;
+    }
+    if (e.keyCode == 40) {
+        keyboard.DOWN = false;
+    }
+    if (e.keyCode == 32) {
+        keyboard.SPACE = false;
     }
 });
 
@@ -64,7 +83,10 @@ function btnPressEvents() {
     });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        keyboard.SPACE = true;
+        if (!keyboard.SPACE) {
+            keyboard.SPACE = true;
+            world.checkThrowObject();
+        }
     });
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
@@ -74,23 +96,7 @@ function btnPressEvents() {
 
 
 
-window.addEventListener("keyup", (e) => {
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-});
+
 
 function mute() {
     if (globalVolume == 0) {
@@ -103,8 +109,7 @@ function mute() {
 }
 
 function openFullScreen() {
-    let canvas = document.getElementById('canvas');
-
+    let canvas = document.getElementById('content');
     if (canvas.requestFullscreen) {
         canvas.requestFullscreen();
     } else if (canvas.mozRequestFullScreen) {
@@ -115,3 +120,27 @@ function openFullScreen() {
         canvas.msRequestFullscreen();
     }
 }
+
+function exitFullScreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+}
+
+function toggleFullScreen() {
+    var fullscreenIcon = document.getElementById("fullscreen-icon");
+    
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+        exitFullScreen();
+        fullscreenIcon.src = "img/ICONS/fit-to-width-64.png";
+    } else {
+        openFullScreen();
+        fullscreenIcon.src = "img/ICONS/fullscreen-exit-48.png";
+    }
+}
+
+

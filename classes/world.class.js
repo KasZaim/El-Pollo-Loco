@@ -10,13 +10,11 @@ class World {
     bottlesbar = new Bottlesbar();
     endboss = this.level.endboss[0];
     throwableObjects = [];
-    bottlethrew = false;
-    
 
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
-        this.ctx = canvas.getContext('2d');
+            this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.run();
@@ -30,37 +28,43 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObject();
         }, 200);
     }
 
     checkThrowObject() {
-        if (this.keyboard.SPACE && this.character.collectedBottles > 0) {
-            let bottle = new ThrowableObjects(this.character.x + 200, this.character.y + 100);
+        if (this.character.collectedBottles > 0) {
+            let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.threwbottle = bottle;
             this.character.collectedBottles--
             this.bottlesbar.bottlesToShow -= 20;
             this.bottlesbar.setPercentage(this.bottlesbar.bottlesToShow);
-
-            this.checkIfBottleHitEndboss(bottle)
-            this.checkIfBottleHitChicken(bottle);
         }
     }
 
-    checkIfBottleHitChicken(bottle) {
+    checkIfBottleHitChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (bottle.isColliding(enemy)) {
-                bottle.splash();
-                bottle.bottleDestroyed = true;
-            }
+            this.throwableObjects.forEach((bottle) => {
+                if (bottle.isColliding(enemy)) {
+                    bottle.bottleDestroyed = true;
+                    bottle.splash();
+                    this.deleteAfterCollected(this.level.enemies, enemy);
+                }
+            });
         });
     }
 
-    checkIfBottleHitEndboss(bottle) {
-        if (bottle.isColliding(this.level.endboss[0])) {
-            bottle.splash(this.level.endboss[0].x, this.level.endboss[0].y);
-            bottle.bottleDestroyed = true;
-        };
+
+    checkIfBottleHitEndboss() {
+        this.level.endboss.forEach((endboss) => {
+            this.throwableObjects.forEach((bottle) => {
+                if (bottle.isColliding(endboss)) {
+                    bottle.bottleDestroyed = true;
+                    bottle.splash();
+                }
+            });
+        });
+
     }
 
     checkCollisions() {
@@ -68,6 +72,8 @@ class World {
         this.checkCoinCollision();
         this.checkEndbossCollision();
         this.checkBottlesCollection();
+        this.checkIfBottleHitChicken();
+        this.checkIfBottleHitEndboss()
     }
 
     checkChickenCollision() {
@@ -77,6 +83,7 @@ class World {
                 this.statusbar.setPercentage(this.character.energy)
                 this.character.HIT_SOUND.volume = 0.3;
                 this.character.HIT_SOUND.play();
+
             }
         })
     }
@@ -170,4 +177,5 @@ class World {
         this.ctx.restore();
         mo.x = mo.x * -1;
     }
+
 }

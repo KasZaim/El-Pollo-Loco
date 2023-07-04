@@ -5,7 +5,6 @@ body {
     justify-content: center;
     font-family: zabars;
     background-image: url('img/Wüste.png');
-    height: 100vh;
 }
 
 @font-face {

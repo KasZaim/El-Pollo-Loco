@@ -6,6 +6,13 @@ class MovableObject extends DrawableObjects {
     acceleration = 2.5;
     lastHit = 0;
 
+
+    offset = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    };
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -28,11 +35,16 @@ class MovableObject extends DrawableObjects {
         this.y = this.y + Math.random() * 200;
     }
     
+    // x = left
+    // y=up 
+    // width = right 
+    // height = down
+
     isColliding(mo) {
-        return this.x < mo.x + mo.width &&
-            this.x + this.width > mo.x &&
-            this.y < mo.y + mo.height &&
-            this.y + this.height > mo.y;
+        return this.x + this.width - this.offset.width > mo.x + mo.offset.x &&
+               this.y + this.height - this.offset.height > mo.y + mo.offset.y &&
+               this.x + this.offset.x < mo.x + mo.width - mo.offset.x &&
+               this.y + this.offset.y < mo.y + mo.height - mo.offset.y; 
     }
     
     hitted(){

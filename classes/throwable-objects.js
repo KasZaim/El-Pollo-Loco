@@ -25,28 +25,30 @@ class ThrowableObjects extends MovableObject {
         this.height = 90;
         this.width = 90;
         this.throw();
+        this.acceleration = 3;
     }
 
     throw() {
-        this.speedY = 20;
+        this.speedY = 22;
         this.applyGravity();
         this.animate();
     }
 
     animate() {
-        this.x += 7;
+        this.x += 5;
         this.playAnimation(this.IMAGES)
         if (this.bottleDestroyed) {
             this.splash();
+            
         } else {
             requestAnimationFrame(() => this.animate());
         }
         
     }
-    splash(x, y) {
+    splash() {
         this.playAnimation(this.IMAGE_SPLASH);
             setTimeout(() => {
                 this.splash();
-            }, 1000/ 5);
+            }, 1000);
     }
 }

@@ -25,13 +25,13 @@ loadImages(arr) {
 }
 
 drawFrame(ctx) {
-    if (this instanceof Character || this instanceof chicken || this instanceof Endboss ) {
+    if (this instanceof Character || this instanceof chicken || this instanceof Endboss || this instanceof ThrowableObjects || this instanceof Bottles || this instanceof Coins) {
         ctx.beginPath();
         ctx.lineWidth = "6";
         ctx.strokeStyle = "red";
-        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.rect(this.x + this.offset.x , this.y + this.offset.y,(this.x + this.width - this.offset.width) - (this.x + this.offset.x),(this.y + this.height - this.offset.height) - (this.y + this.offset.y));
         ctx.stroke();
     }
+    
 }
 }
-
