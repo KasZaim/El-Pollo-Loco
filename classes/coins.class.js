@@ -22,6 +22,8 @@ class Coins extends MovableObject {
         this.generateRandomPosition(x);
     }
 
+    
+
     coinsAnimation() {
         setInterval(() => {
             this.playAnimation(this.IMAGES)

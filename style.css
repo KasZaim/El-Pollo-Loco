@@ -67,7 +67,7 @@ canvas {
     position: absolute;
     z-index: 10;
     top: 10px;
-    width: 720px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -112,7 +112,7 @@ canvas {
     position: absolute;
     z-index: 10;
     bottom: 25px;
-    width: 720px;
+    width: 100%;
 }
 .control-buttons{
     display: flex;
@@ -123,4 +123,14 @@ canvas {
     display: flex;
     gap: 20px;
     margin-right: 40px;
+}
+
+@media (max-width: 800px){
+    .overlay-bottom{
+        display: flex !important;
+    }
+    h1{
+        display: none !important;
+    }
+    
 }

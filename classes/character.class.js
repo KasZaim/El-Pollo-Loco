@@ -39,7 +39,7 @@ class Character extends MovableObject {
     height = 240;
     width = 150;
     y = 190;
-    speed = 10;
+    speed = 7;
     energy = 100;
     collectedBottles = 0;
 
@@ -95,7 +95,6 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_PEPE_WALKING);
                 }
             }
-
         }, 50);
     }
 

@@ -31,6 +31,8 @@ class World {
         }, 200);
     }
 
+    
+
     checkThrowObject() {
         if (this.character.collectedBottles > 0) {
             let bottle = new ThrowableObjects(this.character.x + 100, this.character.y + 100);
