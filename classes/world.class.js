@@ -29,7 +29,7 @@ class World extends MovableObject {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 200);
+        }, 100);
     }
     isFalling(){
         if (this.character.speedY < 0 && this.character.isAboveGround() ) {
@@ -83,22 +83,20 @@ class World extends MovableObject {
         this.checkIfBottleHitEndboss()
     }
 
-    checkChickenCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround()) {
-                    console.log('true')
-                } else {
+        checkChickenCollision() {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
+                    this.deleteAfterCollected(this.level.enemies, enemy);
+                    this.character.jump();
+                } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                     this.character.hitted();
-                    this.statusbar.setPercentage(this.character.energy)
+                    this.statusbar.setPercentage(this.character.energy);
                     this.character.HIT_SOUND.volume = 0.3;
-                    this.character.HIT_SOUND.play();   
-                }
-
-
-            }
-        })
-    }
+                    this.character.HIT_SOUND.play();
+                } 
+            });
+        }
+        
     checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
