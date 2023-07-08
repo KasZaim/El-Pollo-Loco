@@ -14,7 +14,7 @@ class World {
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
-        this.ctx = canvas.getContext('2d');
+            this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.run();
@@ -30,8 +30,8 @@ class World {
             this.checkCollisions();
         }, 100);
     }
-    isFalling(){
-        if (this.character.speedY < 0 && this.character.isAboveGround() ) {
+    isFalling() {
+        if (this.character.speedY < 0 && this.character.isAboveGround()) {
             return true
         }
     }
@@ -54,6 +54,7 @@ class World {
                 if (bottle.isColliding(enemy)) {
                     bottle.bottleDestroyed = true;
                     bottle.splash();
+                    enemy.CHICKEN_DEAD_SOUND.play();
                     this.deleteAfterCollected(this.level.enemies, enemy);
                 }
             });
@@ -79,24 +80,26 @@ class World {
         this.checkEndbossCollision();
         this.checkBottlesCollection();
         this.checkIfBottleHitChicken();
-        this.checkIfBottleHitEndboss()
+        this.checkIfBottleHitEndboss();
     }
 
-        checkChickenCollision() {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
+    checkChickenCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
+                enemy.energy -= 100;
+                this.character.jump();
+                enemy.CHICKEN_DEAD_SOUND.play();
                     this.deleteAfterCollected(this.level.enemies, enemy);
-                    this.character.jump();
-                    enemy.CHICKEN_DEAD_SOUND.play();
-                } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
-                    this.character.hitted();
-                    this.statusbar.setPercentage(this.character.energy);
-                    this.character.HIT_SOUND.volume = 0.3;
-                    this.character.HIT_SOUND.play();
-                } 
-            });
-        }
-        
+                this.deleteAfterCollected(this.level.enemies, enemy);
+            } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
+                this.character.hitted();
+                this.statusbar.setPercentage(this.character.energy);
+                this.character.HIT_SOUND.volume = 0.3;
+                this.character.HIT_SOUND.play();
+            }
+        });
+    }
+
     checkEndbossCollision() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {

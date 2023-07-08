@@ -24,7 +24,7 @@ class Endboss extends MovableObject{
         super().loadImg(this.IMAGES_ENDBOSS_SPAWNING[0]);
         this.loadImages(this.IMAGES_ENDBOSS_SPAWNING);
         this.loadImages(this.IMAGES_ENDBOSS_WALKING);
-        this.x = 2300;
+        this.x = 3700;
         this.speed = 0.03;
         this.animate();   
     }
@@ -48,7 +48,7 @@ class Endboss extends MovableObject{
                 }, 1000 / 80)
             } 
             i++;
-            if (this.world.character.x > 2000 && !this.hadFirstContact) {
+            if (this.world.character.x > 3400 && !this.hadFirstContact) {
                 i = 0;
                 this.hadFirstContact = true;
             }
