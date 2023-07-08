@@ -18,6 +18,7 @@ class MovableObject extends DrawableObjects {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+                console.log(this.speedY)
             }
 
         }, 1000 / 25)
@@ -76,7 +77,7 @@ class MovableObject extends DrawableObjects {
         this.speedY = 35;
     }
     playAnimation(images) {
-        let i = this.currrentImage % images.length;
+        let i = this.currrentImage % images.length;// wie oft passt images.length in currentimage rein = restwert || z.b 11 % 5 = 1;
         let path = images[i];
         this.img = this.imageCache[path];
         this.currrentImage++;

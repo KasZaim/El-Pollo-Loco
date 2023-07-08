@@ -1,4 +1,4 @@
-class World {
+class World extends MovableObject {
     ctx;
     canvas;
     character = new Character();
@@ -12,9 +12,10 @@ class World {
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
+        super();
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
-            this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.run();
@@ -30,8 +31,12 @@ class World {
             this.checkCollisions();
         }, 200);
     }
+    isFalling(){
+        if (this.character.speedY < 0 && this.character.isAboveGround() ) {
+            return true
+        }
+    }
 
-    
 
     checkThrowObject() {
         if (this.character.collectedBottles > 0) {
@@ -81,10 +86,15 @@ class World {
     checkChickenCollision() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hitted();
-                this.statusbar.setPercentage(this.character.energy)
-                this.character.HIT_SOUND.volume = 0.3;
-                this.character.HIT_SOUND.play();
+                if (this.character.isAboveGround()) {
+                    console.log('true')
+                } else {
+                    this.character.hitted();
+                    this.statusbar.setPercentage(this.character.energy)
+                    this.character.HIT_SOUND.volume = 0.3;
+                    this.character.HIT_SOUND.play();   
+                }
+
 
             }
         })
