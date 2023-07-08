@@ -1,4 +1,4 @@
-class World extends MovableObject {
+class World {
     ctx;
     canvas;
     character = new Character();
@@ -12,7 +12,6 @@ class World extends MovableObject {
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
-        super();
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
         this.ctx = canvas.getContext('2d');
@@ -88,6 +87,7 @@ class World extends MovableObject {
                 if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
                     this.deleteAfterCollected(this.level.enemies, enemy);
                     this.character.jump();
+                    enemy.CHICKEN_DEAD_SOUND.play();
                 } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                     this.character.hitted();
                     this.statusbar.setPercentage(this.character.energy);
