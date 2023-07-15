@@ -30,7 +30,7 @@
 
 </head>
 
-<body>
+<body onload=" init()">
     <h1>El Pollo Loco</h1>
     <div class="content" id="content">
         <div class="start-screen" id="start-screen">
@@ -40,13 +40,14 @@
         <canvas id="canvas" width="720px" height="480px">
 
         </canvas>
+        <button id="fullscreen-btn" class="setting-buttons fullscreen-btn" onclick="toggleFullScreen()"><img id="fullscreen-icon" src="img/ICONS/fit-to-width-64.png"></button>
+        
         <div class="overlay" id="overlay">
             <div class="top">
                 <div class="settings">
-                    <button class="setting-buttons" onclick="toggleFullScreen()"><img id="fullscreen-icon" src="img/ICONS/fit-to-width-64.png"></button>
                     <button class="setting-buttons" onclick="mute()"><img id="mute-img" src="img/ICONS/speaker-48.png"></button>
                 </div>
-                <button class="setting-buttons" onclick="startGame(), init()" id="play-game"><img
+                <button class="setting-buttons" onclick="startGame()" id="play-game"><img
                         src="img/ICONS/play-48.png" alt=""></button>
             </div>
 
