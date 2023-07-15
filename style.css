@@ -125,7 +125,7 @@ canvas {
     margin-right: 40px;
 }
 
-@media (max-width: 800px){
+@media (max-width: 1050px){
     .overlay-bottom{
         display: flex !important;
     }

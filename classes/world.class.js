@@ -14,7 +14,7 @@ class World {
     constructor(canvas, keyboard) {
         this.canvas = canvas; //übergibt der canvas; variable den parameter canvas
         this.keyboard = keyboard,
-            this.ctx = canvas.getContext('2d');
+        this.ctx = canvas.getContext('2d');
         this.draw();
         this.setWorld();
         this.run();
@@ -89,7 +89,6 @@ class World {
                 enemy.energy -= 100;
                 this.character.jump();
                 enemy.CHICKEN_DEAD_SOUND.play();
-                    this.deleteAfterCollected(this.level.enemies, enemy);
                 this.deleteAfterCollected(this.level.enemies, enemy);
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hitted();
