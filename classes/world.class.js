@@ -89,7 +89,10 @@ class World {
                 enemy.energy -= 100;
                 this.character.jump();
                 enemy.CHICKEN_DEAD_SOUND.play();
-                this.deleteAfterCollected(this.level.enemies, enemy);
+                if (enemy.chickenIsDead) {
+                    this.deleteAfterCollected(this.level.enemies, enemy);
+                }
+                
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hitted();
                 this.statusbar.setPercentage(this.character.energy);
