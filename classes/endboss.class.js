@@ -50,7 +50,7 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_ENDBOSS_HURT);
         this.loadImages(this.IMAGES_ENDBOSS_DEAD);
         this.x = 3700;
-        this.speed = 0.03;
+        this.speed = 0.1;
         this.animate();   
     }
 
@@ -73,7 +73,7 @@ class Endboss extends MovableObject{
                 }, 1000 / 80)
             } 
             i++;
-            if (this.world.character.x > 3400 && !this.hadFirstContact) {
+            if (this.world.character.x > 3300 && !this.hadFirstContact) {
                 i = 0;
                 this.hadFirstContact = true;
             }

@@ -155,11 +155,14 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinsBar);
         this.addToMap(this.bottlesBar);
+        if (this.character.x > 3000) {
+            
+            this.addToMap(this.endbossBar);
+        }
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addToMap(this.endbossBar);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
@@ -182,7 +185,7 @@ class World {
             this.flipImage(mo)
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx)
+        // mo.drawFrame(this.ctx)
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
