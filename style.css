@@ -38,7 +38,7 @@ canvas{
 .fullscreen-btn{
     position: absolute;
     top: 10px;
-    z-index: 6;
+    z-index: 12;
 }
 
 @media only screen and (max-width:720px) {

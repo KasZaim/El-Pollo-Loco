@@ -22,6 +22,7 @@ class BabyChicken extends chicken{
     constructor() {
         super().loadImg('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_ENEMIES_WALKING);
+        this.loadImages(this.IMAGE_DEAD);
         this.x = this.x + Math.random() * 1200;
         this.speed = 0.20 + Math.random() * 0.3;
         this.animate();
@@ -29,16 +30,15 @@ class BabyChicken extends chicken{
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ENEMIES_WALKING)
-        }, 200)
-        setInterval(() => {
             this.moveLeft();
         }, 1000 / 60)
 
         setInterval(() => {
+            this.playAnimation(this.IMAGES_ENEMIES_WALKING)
             if (this.isDead() == true) {
                 this.playAnimation(this.IMAGE_DEAD);
             }
-        }, 100);
+        }, 200)
+        
     }
 }
