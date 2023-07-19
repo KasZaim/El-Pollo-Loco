@@ -31,7 +31,7 @@ canvas{
     position: relative;
     display: block;
 }
-.content:fullscreen canvas, .start-screen {
+.content:fullscreen canvas, .intro-outro {
     height: 100% !important;
     width: 100% !important;
 }
@@ -53,7 +53,7 @@ canvas{
     }
 }
 
-.start-screen {
+.intro-outro {
     height: 480px;
     position: absolute;
     display: flex;
@@ -62,8 +62,7 @@ canvas{
     z-index: 5;
 }
 
-.start-screen img {
-    object-fit: contain;
+.intro-outro img {
     width: 100%;
     height: 100%;
 }
@@ -133,9 +132,29 @@ canvas{
     gap: 20px;
     margin-right: 40px;
 }
-.start-screen:fullscreen{
-    height: 100% !important;
-}
+.restart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    bottom: 50px;
+    border: 2px #a75f39 solid;
+    font-size: 28px;
+    padding: 5px;
+    font-family: zabars;
+    cursor: pointer;
+    background-image: linear-gradient(180deg, #ffc61f, #ffdf00, #ffc61f);
+    color: #9b401d; /* oder eine passende Textfarbe für bessere Lesbarkeit */
+    transition: 100ms ease-in-out;
+  }
+
+  .restart:hover{
+    transform: scale(1.1);
+  }
+  
 
 @media (max-width: 1050px){
     body {

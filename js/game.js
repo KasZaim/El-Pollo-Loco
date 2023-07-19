@@ -3,27 +3,36 @@ let keyboard = new Keyboard();
 let world;
 BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 let globalVolume = 0.2;
+gameStop = false;
+
 
 function init() {
     detectPhonePosition();
-
+    loadDesktopControlEvents();
+    loadMobileControlEvents();
 }
-function startGame() {
-    initLevel();
-    initGame();
-
+function showStartScreen(){
     document.getElementById('start-screen').classList.add('d-none');
     document.getElementById('overlay').classList.add('d-none');
     document.getElementById('fullscreen-btn').style.background = 'content-box';
     document.getElementById('fullscreen-btn').style.right = '5px'
+}
+
+function startGame() {
+    
+    initLevel();
+    initGame();
+    
+    showStartScreen();
     this.BACKGROUND_MUSIC.volume = globalVolume;
     this.BACKGROUND_MUSIC.play();
-    loadMobileControlEvents();
-    loadDesktopControlEvents();
+    
 }
+
 function initGame() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard)
+    world = new World(canvas, keyboard, this)
+
     console.log('My Character is', world.character)
 }
 function loadDesktopControlEvents() {
@@ -44,17 +53,7 @@ function loadDesktopControlEvents() {
             keyboard.SPACE = true;
             world.checkThrowObject();
         }
-        if (e.keyCode === 27) { // Escape-Taste
-            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
-                toggleFullScreen();
-                document.getElementById('canvas').style.height = '480px';
-                document.getElementById('canvas').style.width = '720px';
-                document.getElementById('startScreen').style.height = '480px';
-            }
-        }
-
     });
-
 
     window.addEventListener("keyup", (e) => {
         if (e.keyCode == 37) {
@@ -74,7 +73,6 @@ function loadDesktopControlEvents() {
         }
     });
 }
-
 
 function loadMobileControlEvents() {
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
@@ -114,10 +112,6 @@ function loadMobileControlEvents() {
     });
 }
 
-
-
-
-
 function mute() {
     if (globalVolume == 0) {
         globalVolume = 0.3;
@@ -153,17 +147,12 @@ function exitFullScreen() {
 
 function toggleFullScreen() {
     let fullscreenIcon = document.getElementById("fullscreen-icon");
-    let canvas = document.getElementById('canvas');
-    let startScreen = document.getElementById('start-screen');
     if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
         exitFullScreen();
         fullscreenIcon.src = "img/ICONS/fit-to-width-64.png";
     } else {
         openFullScreen();
         fullscreenIcon.src = "img/ICONS/fullscreen-exit-48.png";
-        // canvas.style.height = '100vh';
-        // canvas.style.width = '100vw';
-        // startScreen.style.height = '100%';
     }
 }
 
@@ -179,5 +168,16 @@ function detectPhonePosition() {
             }
         }
     });
+}
+
+function showGameOver(){
+    let gameOver = document.getElementById('game-over');
+    let youLost = document.getElementById('you-lost');
+    if (world.character.gameOver) {
+        youLost.classList.remove('d-none');
+    } else {
+        gameOver.classList.remove('d-none');
+    }
+    gameStop = true;
 }
 

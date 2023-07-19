@@ -71,6 +71,11 @@ function initLevel() {
             new Bottles(1500),
             new Bottles(806),
             new Bottles(100),
+            new Bottles(100),
+            new Bottles(100),
+            new Bottles(100),
+            new Bottles(100),
+            new Bottles(100),
         ],
         [
             new Endboss()

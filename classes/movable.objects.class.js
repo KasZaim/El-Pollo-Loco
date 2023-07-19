@@ -1,11 +1,10 @@
 class MovableObject extends DrawableObjects {
-    
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     lastHit = 0;
-
+    gameOver = false;
 
     offset = {
         x: 0,
@@ -48,7 +47,7 @@ class MovableObject extends DrawableObjects {
     }
     
     hitted(){
-        this.energy -= 5;
+        this.energy -= 10;
         if (this.energy < 0) {
             this.energy = 0;
         }else{
