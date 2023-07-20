@@ -154,7 +154,46 @@ canvas{
   .restart:hover{
     transform: scale(1.1);
   }
-  
+  .rotate-device{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0 ;
+    z-index: 20;
+    background: rgba;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px); 
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    font-size: 24px;
+    gap: 20px;
+  }
+  .rotate-device img {
+    height: 100px;
+    width: 100px;
+    animation: rotation 2s linear infinite; /* Die Animation dauert 4 Sekunden, wiederholt sich endlos */
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(60deg); /* Startwinkel: 0 Grad */
+    }
+    50% {
+        transform: rotate(-60deg); /* Dreht das Bild um 180 Grad */
+    }
+    100% {
+        transform: rotate(60deg); /* Dreht das Bild weitere 180 Grad (komplette Drehung) */
+    }
+}
+
+
 
 @media (max-width: 1050px){
     body {

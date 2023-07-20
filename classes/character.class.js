@@ -158,5 +158,6 @@ class Character extends MovableObject {
             }}
         }, 1000);
     }
+    
 
 }

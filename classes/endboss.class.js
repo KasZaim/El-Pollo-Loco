@@ -71,7 +71,7 @@ class Endboss extends MovableObject {
                     this.moveLeft();
                 }, 1000 / 80)
             }
-            if (this.x < this.world.character.x + 300 && !this.isDead()) {
+            if (this.x < this.world.character.x + 250 && !this.isDead()) {
                 setTimeout(() => {
                 this.playAnimation(this.IMAGES_ENDBOSS_ATTACK)
                 }, 1000);

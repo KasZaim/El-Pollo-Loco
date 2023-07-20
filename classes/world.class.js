@@ -172,7 +172,15 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Canvas wird entleert
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.endboss);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
+        
         this.addToMap(this.statusBar);
         this.addToMap(this.coinsBar);
         this.addToMap(this.bottlesBar);
@@ -180,13 +188,6 @@ class World {
             this.addToMap(this.endbossBar);
         }
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.clouds);
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.endboss);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(function () {

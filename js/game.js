@@ -4,8 +4,12 @@ let world;
 BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 let globalVolume = 0.2;
 gameStop = false;
+let IntervalIds = [];
 
-
+function setStoppableInterval(fn, time){
+    let id = setInterval(fn, time);
+    IntervalIds.push(id);
+}
 function init() {
     detectPhonePosition();
     loadDesktopControlEvents();
@@ -158,13 +162,13 @@ function toggleFullScreen() {
 
 function detectPhonePosition() {
     window.addEventListener("resize", function () {
+        document.getElementById('rotate-device').classList.add('d-none');
         if (window.innerWidth < 1000) {
-            if (window.matchMedia("(orientation: landscape)").matches) {
-                // Landscape mode
+            if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.remove('d-none');
-            } else {
-                // Portrait mode
+            } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.add('d-none');
+                document.getElementById('rotate-device').classList.remove('d-none');
             }
         }
     });
@@ -179,5 +183,9 @@ function showGameOver(){
         gameOver.classList.remove('d-none');
     }
     gameStop = true;
+}
+
+function restartGame(){
+    location.reload();
 }
 

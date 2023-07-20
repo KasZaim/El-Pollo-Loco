@@ -27,12 +27,6 @@ class MovableObject extends DrawableObjects {
         }else{
             return this.y < 190
     }}
-
-    generateRandomPosition(x){
-        this.x = x;
-        this.x = this.x + Math.random() * 1500;
-        this.y = this.y + Math.random() * 200;
-    }
     
     // x = left
     // y=up 
