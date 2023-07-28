@@ -39,6 +39,8 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
+    ENDOSSHURT_SOUND = new Audio('audio/endboss-hurt.mp3');
+    ENDBOSSDEAD_SOUND = new Audio('audio/endboss-dead.mp3');
     hadFirstContact = false;
     world;
     constructor() {
@@ -73,15 +75,18 @@ class Endboss extends MovableObject {
             }
             if (this.x < this.world.character.x + 250 && !this.isDead()) {
                 setTimeout(() => {
-                this.playAnimation(this.IMAGES_ENDBOSS_ATTACK)
+                this.playAnimation(this.IMAGES_ENDBOSS_ATTACK);
                 }, 1000);
             }
             if (this.isHurt()) {
-                    this.playAnimation(this.IMAGES_ENDBOSS_HURT)
+                    this.playAnimation(this.IMAGES_ENDBOSS_HURT);
+                    this.ENDBOSSDEAD_SOUND.currentTime=4;
+                    this.ENDOSSHURT_SOUND.play();
             }
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_ENDBOSS_DEAD)
                 this.gameOver = true;
+                this.ENDBOSSDEAD_SOUND.play();
             }
             i++;
             if (this.world.character.x > 3300 && !this.hadFirstContact) {

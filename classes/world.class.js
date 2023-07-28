@@ -2,10 +2,10 @@ class World {
     ctx;
     canvas;
     game;
-    character = new Character();
     keyboard;
     camera_x = 0;
     level = level1;
+    character = new Character();
     endbossBar = new EndbossBar();
     statusBar = new Statusbar();
     coinsBar = new Coinsbar();

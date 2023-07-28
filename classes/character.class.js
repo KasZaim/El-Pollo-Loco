@@ -58,8 +58,9 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
-    walking_sound = new Audio('audio/Walking.mp3');
+    WALKING_SOUND = new Audio('audio/Walking.mp3');
     HIT_SOUND = new Audio('audio/ouch.mp3');
+    DEAD_SOUND = new Audio('audio/dead-sound.mp3');
     height = 240;
     width = 150;
     y = 190;
@@ -68,6 +69,7 @@ class Character extends MovableObject {
     collectedBottles = 0;
     state = "IDLE";
     isJumping = false;
+    isDeadSoundPlayed = false;
     time = new Date().getTime();
     offset = {
         x: 20,
@@ -91,7 +93,7 @@ class Character extends MovableObject {
     moveRightFn() {
         if (this.World.keyboard.RIGHT && this.x < this.World.level.level_end_x) {
             this.moveRight();
-            this.walking_sound.play();
+            this.WALKING_SOUND.play();
         }
     }
 
@@ -99,7 +101,7 @@ class Character extends MovableObject {
         if (this.World.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true;
-            this.walking_sound.play();
+            this.WALKING_SOUND.play();
         }
     }
 
@@ -107,7 +109,7 @@ class Character extends MovableObject {
         if (this.World.keyboard.UP && !this.isAboveGround() && !this.isJumping) {
             this.jump();
             this.isJumping = true;
-            this.walking_sound.pause();
+            this.WALKING_SOUND.pause();
         } else if (!this.World.keyboard.UP) {
             this.isJumping = false;
         }
@@ -123,14 +125,20 @@ class Character extends MovableObject {
         }, 1000 / 60);
         
         setStoppableInterval(() => {
-           this.walking_sound.pause();
+           this.WALKING_SOUND.pause();
         }, 200);
 
         setStoppableInterval(() => {
-            if (this.isDead()) {
+            if (this.isDead() && !this.isDeadSoundPlayed) {
+                this.DEAD_SOUND.play();
+                this.isDeadSoundPlayed = true;
                 this.state = "DEAD";
                 this.gameOver = true;
                 this.playAnimation(this.IMAGES_DEAD);
+                setInterval(() => {
+                    this.y+=6; 
+                },1000/60);
+
             } else if (this.isHurt()) {
                 this.state = "HURT";
                 this.playAnimation(this.IMAGES_HURT);
@@ -178,80 +186,3 @@ class Character extends MovableObject {
         }, 1000);
     }
 }
-
-
-
-
-//     animate() {
-//         setInterval(() => {
-//             this.walking_sound.pause();
-//             if (this.World.keyboard.RIGHT && this.x < this.World.level.level_end_x) {
-//                 this.moveRight();
-//                 this.walking_sound.play();
-//             }
-//             if (this.World.keyboard.LEFT && this.x > 0) {
-//                 this.moveLeft();
-//                 this.otherDirection = true;
-//                 this.walking_sound.play();
-//             }
-//             if (this.World.keyboard.UP && !this.isAboveGround() && !this.isJumping) {
-//                     this.jump();
-//                     this.isJumping = true;
-                
-//             } else if (!this.World.keyboard.UP) {
-//                 this.isJumping = false; 
-//             }
-//             this.World.camera_x = -this.x + 50;
-//         }, 1000 / 60)
-
-//         setInterval(() => {
-//             if (this.isDead()) {
-//                 this.state = "DEAD";
-//                 this.gameOver = true;
-//                     this.playAnimation(this.IMAGES_DEAD)
-                
-//             }
-//             else if (this.isHurt()) {
-//                 this.state = "HURT";
-//                 this.playAnimation(this.IMAGES_HURT)
-//             }
-//             else if (this.isAboveGround()) {
-//                 if (this.state != "JUMPING") {
-//                     this.state = "JUMPING";
-//                     this.currrentImage = 0;
-//                 }
-//                 if (this.currrentImage < 7) {
-//                     this.playAnimation(this.IMAGES_JUMPING);
-//                 }
-//             }
-//             else if (this.World.keyboard.RIGHT || this.World.keyboard.LEFT) {
-//                 this.state = "WALKING";
-//                 this.playAnimation(this.IMAGES_PEPE_WALKING);
-//             }
-             
-
-//         }, 100);
-
-//         setInterval(() => {
-//             if (!this.World.keyboard.RIGHT || !this.World.keyboard.LEFT || !this.isAboveGround() || !this.isHurt()) {
-//                 if (this.World.keyboard.RIGHT || this.World.keyboard.LEFT || this.World.keyboard.UP) {
-//                     this.time = new Date().getTime();  // Zeit zurücksetzen
-//                 }
-
-//                 let passedTime = new Date().getTime() - this.time;
-//                 passedTime = passedTime/1000;
-                
-//                 if (passedTime > 4) {
-//                     this.playAnimation(this.IMAGES_IDLE);
-//                     this.state = 'IDLE';
-//                 }
-//                  if (passedTime > 8) {
-//                     this.playAnimation(this.IMAGES_LONG_IDLE);
-//                     this.state = 'IDLE';
-                  
-//             }}
-//         }, 1000);
-//     }
-    
-
-// }

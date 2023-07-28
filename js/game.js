@@ -1,10 +1,13 @@
-let canvas;
 let keyboard = new Keyboard();
+let canvas;
 let world;
-BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 let globalVolume = 0.2;
-gameStop = false;
 let intervalIds = [];
+gameStop = false;
+BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
+GAMEOVER_MUSIC = new Audio('audio/game-over.mp3');
+GAMEWON_MUSIC = new Audio('audio/won.mp3');
+
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
@@ -21,9 +24,9 @@ function continueGame() {
         const { fn, time } = interval;
         setStoppableInterval(fn, time);
     });
-    BACKGROUND_MUSIC.play();    
+    BACKGROUND_MUSIC.play();
 }
-function clearAllIntervals(){
+function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
     showGameOver();
 }
@@ -32,7 +35,7 @@ function init() {
     loadDesktopControlEvents();
     loadMobileControlEvents();
 }
-function showStartScreen(){
+function showStartScreen() {
     document.getElementById('start-screen').classList.add('d-none');
     document.getElementById('overlay').classList.add('d-none');
     document.getElementById('fullscreen-btn').style.background = 'content-box';
@@ -43,9 +46,9 @@ function startGame() {
     initLevel();
     initGame();
     showStartScreen();
-    this.BACKGROUND_MUSIC.volume = globalVolume;
-    this.BACKGROUND_MUSIC.play();
-    
+    BACKGROUND_MUSIC.volume = globalVolume;
+    BACKGROUND_MUSIC.play();
+
 }
 
 function initGame() {
@@ -191,18 +194,30 @@ function detectPhonePosition() {
     });
 }
 
-function showGameOver(){
-    let gameOver = document.getElementById('game-over');
-    let youLost = document.getElementById('you-lost');
+function showGameOver() {
+    BACKGROUND_MUSIC.pause();
+    GAMEOVER_MUSIC.currentTime = 13;
+    GAMEOVER_MUSIC.volume = globalVolume;
     if (world.character.gameOver) {
-        youLost.classList.remove('d-none');
+        showGameLostScreen();
     } else {
-        gameOver.classList.remove('d-none');
+        showYouWonScreen();
     }
     gameStop = true;
 }
-
-function restartGame(){
+function showGameLostScreen() {
+    let youLost = document.getElementById('you-lost');
+    youLost.classList.remove('fade-out');
+    youLost.classList.add('fade-in');
+    GAMEOVER_MUSIC.play();
+}
+function showYouWonScreen() {
+    let gameOver = document.getElementById('you-won');
+    gameOver.classList.remove('fade-out');
+    gameOver.classList.add('fade-in');
+    GAMEWON_MUSIC.play();
+}
+function restartGame() {
     location.reload();
 }
 
