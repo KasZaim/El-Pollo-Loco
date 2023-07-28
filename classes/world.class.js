@@ -22,10 +22,7 @@ class World {
         this.setWorld();
         this.run();
     }
-    clearAllIntervals() {
-        for (let i = 1; i < 9999; i++) window.clearInterval(i);
-        this.game.showGameOver();
-      }
+
     setWorld() {
         this.character.World = this;
         this.endboss.world = this;
@@ -34,7 +31,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 100);
+        }, 50);
     }
     isFalling() {
         if (this.character.speedY < 0 && this.character.isAboveGround()) {
@@ -91,7 +88,7 @@ class World {
                     if (endboss.gameOver) {
                         endboss.speed = 0;
                         setTimeout(() => {
-                            this.clearAllIntervals();
+                            clearAllIntervals();
                         }, 1000);
                     }
                     this.endbossBar.setPercentage(this.endboss.energy);
@@ -122,7 +119,7 @@ class World {
             }
             if (this.character.gameOver) {
                 setTimeout(() => {
-                    this.clearAllIntervals();
+                    clearAllIntervals();
                 }, 1500);
             }
         });

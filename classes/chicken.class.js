@@ -27,19 +27,20 @@ class chicken extends MovableObject {
         this.animate();
     }
 
-    animate() {
-        setInterval(() => {
-            this.moveLeft();
-        }, 20)
-        
-        // setStoppableInterval(this.moveLeft(), 1000/60);
+    moveLeftFn() {
+        if (this.isDead()) return;
+        this.moveLeft();
+    }
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_ENEMIES_WALKING)
-            if (this.isDead() == true) {
-                this.playAnimation(this.IMAGE_DEAD);
-            }
-        }, 200)
-        
+    playAnimationFn() {
+        this.playAnimation(this.IMAGES_ENEMIES_WALKING)
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGE_DEAD);
+        }
+    }
+
+    animate() {
+        setStoppableInterval(this.moveLeftFn.bind(this), 1000 / 60);
+        setStoppableInterval(this.playAnimationFn.bind(this), 200);
     }
 }

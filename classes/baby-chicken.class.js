@@ -27,18 +27,4 @@ class BabyChicken extends chicken{
         this.speed = 0.20 + Math.random() * 0.3;
         this.animate();
     }
-
-    animate() {
-        setInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60)
-
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_ENEMIES_WALKING)
-            if (this.isDead() == true) {
-                this.playAnimation(this.IMAGE_DEAD);
-            }
-        }, 200)
-        
-    }
 }

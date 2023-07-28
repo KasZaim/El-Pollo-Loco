@@ -4,11 +4,28 @@ let world;
 BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 let globalVolume = 0.2;
 gameStop = false;
-let IntervalIds = [];
+let intervalIds = [];
 
-function setStoppableInterval(fn, time){
+function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
-    IntervalIds.push(id);
+    intervalIds.push({ id, fn, time });
+}
+
+function clearStoppableIntervals() {
+    intervalIds.forEach((interval) => clearInterval(interval.id));
+    BACKGROUND_MUSIC.pause();
+}
+
+function continueGame() {
+    intervalIds.forEach((interval) => {
+        const { fn, time } = interval;
+        setStoppableInterval(fn, time);
+    });
+    BACKGROUND_MUSIC.play();    
+}
+function clearAllIntervals(){
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    showGameOver();
 }
 function init() {
     detectPhonePosition();
@@ -23,10 +40,8 @@ function showStartScreen(){
 }
 
 function startGame() {
-    
     initLevel();
     initGame();
-    
     showStartScreen();
     this.BACKGROUND_MUSIC.volume = globalVolume;
     this.BACKGROUND_MUSIC.play();
@@ -118,7 +133,7 @@ function loadMobileControlEvents() {
 
 function mute() {
     if (globalVolume == 0) {
-        globalVolume = 0.3;
+        globalVolume = 0.2;
         document.getElementById('mute-img').src = 'img/ICONS/speaker-48.png';
     } else {
         globalVolume = 0;
@@ -163,9 +178,11 @@ function toggleFullScreen() {
 function detectPhonePosition() {
     window.addEventListener("resize", function () {
         document.getElementById('rotate-device').classList.add('d-none');
+        document.getElementById('tutorial').classList.remove('d-none');
         if (window.innerWidth < 1000) {
             if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.remove('d-none');
+                document.getElementById('tutorial').classList.add('d-none');
             } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.add('d-none');
                 document.getElementById('rotate-device').classList.remove('d-none');
