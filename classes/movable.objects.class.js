@@ -66,7 +66,7 @@ class MovableObject extends DrawableObjects {
         this.x -= this.speed;
     }
     jump() {
-        this.speedY = 35;
+        this.speedY = 30;
     }
     playAnimation(images) {
         let i = this.currrentImage % images.length;// wie oft passt images.length in currentimage rein = restwert || z.b 11 % 5 = 1;

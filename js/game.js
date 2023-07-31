@@ -4,10 +4,13 @@ let world;
 let globalVolume = 0.2;
 let intervalIds = [];
 gameStop = false;
+
 BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 GAMEOVER_MUSIC = new Audio('audio/game-over.mp3');
 GAMEWON_MUSIC = new Audio('audio/won.mp3');
-
+WALKING_SOUND = new Audio('audio/Walking.mp3');
+HIT_SOUND = new Audio('audio/ouch.mp3');
+DEAD_SOUND = new Audio('audio/dead-sound.mp3');
 
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
@@ -39,7 +42,10 @@ function showStartScreen() {
     document.getElementById('start-screen').classList.add('d-none');
     document.getElementById('overlay').classList.add('d-none');
     document.getElementById('fullscreen-btn').style.background = 'content-box';
-    document.getElementById('fullscreen-btn').style.right = '5px'
+    document.getElementById('fullscreen-btn').style.right = '5px';
+    document.getElementById('mute-btn').style.background = 'content-box';
+    document.getElementById('mute-btn').style.right = '70px';
+    document.getElementById('mute-btn').style.left = 'unset';
 }
 
 function startGame() {
@@ -134,14 +140,22 @@ function loadMobileControlEvents() {
     });
 }
 
+
 function mute() {
+    let muteImg = document.getElementById('mute-img');
     if (globalVolume == 0) {
         globalVolume = 0.2;
-        document.getElementById('mute-img').src = 'img/ICONS/speaker-48.png';
+        muteImg.src = 'img/ICONS/speaker-48.png';
     } else {
         globalVolume = 0;
-        document.getElementById('mute-img').src = 'img/ICONS/mute-2-48.png';
+        muteImg.src = 'img/ICONS/mute-2-48.png';
     }
+    BACKGROUND_MUSIC.volume = globalVolume;
+    GAMEOVER_MUSIC.volume = globalVolume;
+    GAMEWON_MUSIC.volume = globalVolume;
+    WALKING_SOUND.volume = globalVolume;
+    HIT_SOUND.volume = globalVolume;
+    DEAD_SOUND.volume = globalVolume;
 }
 
 function openFullScreen() {
@@ -182,10 +196,12 @@ function detectPhonePosition() {
     window.addEventListener("resize", function () {
         document.getElementById('rotate-device').classList.add('d-none');
         document.getElementById('tutorial').classList.remove('d-none');
+        document.getElementById('overlay-bottom').classList.add('d-none');
         if (window.innerWidth < 1000) {
+            document.getElementById('tutorial').classList.add('d-none');
             if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.remove('d-none');
-                document.getElementById('tutorial').classList.add('d-none');
+
             } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
                 document.getElementById('overlay-bottom').classList.add('d-none');
                 document.getElementById('rotate-device').classList.remove('d-none');

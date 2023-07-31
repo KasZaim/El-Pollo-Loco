@@ -58,9 +58,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
-    WALKING_SOUND = new Audio('audio/Walking.mp3');
-    HIT_SOUND = new Audio('audio/ouch.mp3');
-    DEAD_SOUND = new Audio('audio/dead-sound.mp3');
+    
     height = 240;
     width = 150;
     y = 190;
@@ -93,7 +91,7 @@ class Character extends MovableObject {
     moveRightFn() {
         if (this.World.keyboard.RIGHT && this.x < this.World.level.level_end_x) {
             this.moveRight();
-            this.WALKING_SOUND.play();
+            WALKING_SOUND.play();
         }
     }
 
@@ -101,7 +99,7 @@ class Character extends MovableObject {
         if (this.World.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
             this.otherDirection = true;
-            this.WALKING_SOUND.play();
+            WALKING_SOUND.play();
         }
     }
 
@@ -109,7 +107,7 @@ class Character extends MovableObject {
         if (this.World.keyboard.UP && !this.isAboveGround() && !this.isJumping) {
             this.jump();
             this.isJumping = true;
-            this.WALKING_SOUND.pause();
+            WALKING_SOUND.pause();
         } else if (!this.World.keyboard.UP) {
             this.isJumping = false;
         }
@@ -125,12 +123,12 @@ class Character extends MovableObject {
         }, 1000 / 60);
         
         setStoppableInterval(() => {
-           this.WALKING_SOUND.pause();
+           WALKING_SOUND.pause();
         }, 200);
 
         setStoppableInterval(() => {
             if (this.isDead() && !this.isDeadSoundPlayed) {
-                this.DEAD_SOUND.play();
+                DEAD_SOUND.play();
                 this.isDeadSoundPlayed = true;
                 this.state = "DEAD";
                 this.gameOver = true;

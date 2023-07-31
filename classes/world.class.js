@@ -31,7 +31,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, 50);
+        }, 100);
     }
     isFalling() {
         if (this.character.speedY < 0 && this.character.isAboveGround()) {
@@ -62,19 +62,20 @@ class World {
 
     checkIfBottleHitChicken() {
         this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead()) { return }
             this.throwableObjects.forEach((bottle) => {
                 if (bottle.isColliding(enemy)) {
-                    enemy.energy -= 100;
-                    enemy.CHICKEN_DEAD_SOUND.play();
+                    this.deleteChicken(enemy);
                     bottle.bottleDestroyed = true;
                     bottle.splash();
                     setTimeout(() => {
                         this.deleteAfterCollected(this.level.enemies, enemy);
-                    }, 300);
+                    }, 600);
                 }
             });
         });
     }
+    
 
     checkIfBottleHitEndboss() {
         this.level.endboss.forEach((endboss) => {
@@ -100,22 +101,21 @@ class World {
 
     checkChickenCollision() {
         this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead()) { return }
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
-                enemy.energy -= 100;
+                this.deleteChicken(enemy);
                 this.character.jump();
-                enemy.CHICKEN_DEAD_SOUND.play();
+                
                 setTimeout(() => {
                     this.deleteAfterCollected(this.level.enemies, enemy);
-                }, 1000);
-
+                }, 600);
 
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 if (!this.character.isHurt()) {
                     this.character.hitted();
                 }
                 this.statusBar.setPercentage(this.character.energy);
-                this.character.HIT_SOUND.volume = 0.3;
-                this.character.HIT_SOUND.play();
+                HIT_SOUND.play();
             }
             if (this.character.gameOver) {
                 setTimeout(() => {
@@ -130,8 +130,7 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hitted();
                 this.statusBar.setPercentage(this.character.energy)
-                this.character.HIT_SOUND.volume = 0.3;
-                this.character.HIT_SOUND.play();
+                HIT_SOUND.play();
             }
         })
     }
@@ -159,6 +158,10 @@ class World {
                 this.bottlesBar.COLLECTING_SOUND.play();
             }
         })
+    }
+    deleteChicken(enemy){
+        enemy.energy -= 100;
+        enemy.CHICKEN_DEAD_SOUND.play();
     }
 
     deleteAfterCollected(object, item) {

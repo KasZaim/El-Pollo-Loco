@@ -5,6 +5,7 @@ body {
     justify-content: center;
     font-family: zabars;
     background-image: url('img/Wüste.png');
+    margin: 0;
 }
 
 @font-face {
@@ -13,7 +14,7 @@ body {
 }
 
 h1 {
-    font-size: 72px;
+    font-size: 71px;
     text-shadow: 4px 4px rgba(0, 0, 0, 0.4);
     letter-spacing: 8px;
     color: #9b401d;
@@ -42,7 +43,7 @@ canvas {
     width: 100% !important;
 }
 
-.fullscreen-btn {
+.onscreen-btn {
     position: absolute;
     top: 10px;
     z-index: 12;
@@ -87,6 +88,7 @@ canvas {
 .intro-outro img {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
 }
 
 .d-none {
@@ -143,19 +145,20 @@ canvas {
     margin-left: 20px;
 }
 
-#play-game {
-    height: 90px;
-    width: 90px;
-    margin-right: 20px;
-}
+
 
 .top {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
+    padding-right: 20px;
 }
 
+.top button {
+    height: 90px;
+    width: 90px;
+}
 .overlay-bottom {
     display: flex;
     justify-content: space-between;
@@ -168,7 +171,7 @@ canvas {
 
 .control-buttons {
     display: flex;
-    gap: 30px;
+    gap: 40px;
     margin-left: 40px;
 }
 
@@ -208,10 +211,8 @@ canvas {
     position: fixed;
     top: 0;
     z-index: 20;
-    background: rgba;
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -293,5 +294,4 @@ canvas {
     h1 {
         display: none !important;
     }
-
 }
