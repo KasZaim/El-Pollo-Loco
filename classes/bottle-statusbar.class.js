@@ -1,4 +1,4 @@
-class Bottlesbar extends Statusbar{
+class Bottlesbar extends Coinsbar{
 
     IMAGES = [
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png',
@@ -9,16 +9,12 @@ class Bottlesbar extends Statusbar{
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png'
     ]
 
-    bottlesToShow = 0;
     COLLECTING_SOUND = new Audio('audio/wohoo.mp3')
 
     constructor(){
         super();
         this.loadImages(this.IMAGES)
         this.setPercentage(0);
-        this.x = 50;
         this.y = 100;
-        this.height = 70;
-        this.width = 220;
     }
 }

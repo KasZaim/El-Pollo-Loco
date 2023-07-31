@@ -46,16 +46,16 @@ class World {
             this.throwableObjects.push(bottle);
             this.threwbottle = bottle;
             this.character.collectedBottles--
-            this.bottlesBar.bottlesToShow -= 10;
-            this.bottlesBar.setPercentage(this.bottlesBar.bottlesToShow);
+            this.bottlesBar.collected -= 10;
+            this.bottlesBar.setPercentage(this.bottlesBar.collected);
         }
     }
 
     checkCollisions() {
         this.checkChickenCollision();
-        this.checkCoinCollision();
+        this.checkCollectiblesCollision(this.level.coins, this.coinsBar);
+        this.checkCollectiblesCollision(this.level.bottles, this.bottlesBar);
         this.checkEndbossCollision();
-        this.checkBottlesCollection();
         this.checkIfBottleHitChicken();
         this.checkIfBottleHitEndboss();
     }
@@ -65,9 +65,8 @@ class World {
             if (enemy.isDead()) { return }
             this.throwableObjects.forEach((bottle) => {
                 if (bottle.isColliding(enemy)) {
-                    this.deleteChicken(enemy);
-                    bottle.bottleDestroyed = true;
-                    bottle.splash();
+                    this.deleteChickenAfterCollision(enemy);
+                    this.deleteBottleAfterCollision(bottle);
                     setTimeout(() => {
                         this.deleteAfterCollected(this.level.enemies, enemy);
                     }, 600);
@@ -81,13 +80,12 @@ class World {
         this.level.endboss.forEach((endboss) => {
             this.throwableObjects.forEach((bottle) => {
                 if (bottle.isColliding(endboss)) {
-                    bottle.bottleDestroyed = true;
-                    bottle.splash();
+                    this.deleteBottleAfterCollision(bottle);
                     if (!endboss.isHurt()) {
                         endboss.hitted();
                     }
                     if (endboss.gameOver) {
-                        endboss.speed = 0;
+                        endboss.speed = 0; 
                         setTimeout(() => {
                             clearAllIntervals();
                         }, 1000);
@@ -103,7 +101,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isDead()) { return }
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && !this.character.isHurt()) {
-                this.deleteChicken(enemy);
+                this.deleteChickenAfterCollision(enemy);
                 this.character.jump();
                 
                 setTimeout(() => {
@@ -135,33 +133,30 @@ class World {
         })
     }
 
-    checkCoinCollision() {
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                this.coinsBar.collected += 10;
-                this.coinsBar.setPercentage(this.coinsBar.collected);
-                this.deleteAfterCollected(this.level.coins, coin);
-                this.coinsBar.COLLECTING_SOUND.volume = 0.2;
-                this.coinsBar.COLLECTING_SOUND.play();
+    checkCollectiblesCollision(collectiblesArray, bar) {
+        collectiblesArray.forEach((collectible) => {
+            if (this.character.isColliding(collectible)) {
+                bar.collected += 10;
+                bar.setPercentage(bar.collected);
+                this.deleteAfterCollected(collectiblesArray, collectible);
+                bar.COLLECTING_SOUND.volume= playSoundVolume();
+                bar.COLLECTING_SOUND.play();
+                if (collectiblesArray == this.level.bottles) {
+                    this.character.collectedBottles++
+                }
             }
-        })
+        });
     }
+    
 
-    checkBottlesCollection() {
-        this.level.bottles.forEach((bottle) => {
-            if (this.character.isColliding(bottle)) {
-                this.bottlesBar.bottlesToShow += 10;
-                this.character.collectedBottles++
-                this.bottlesBar.setPercentage(this.bottlesBar.bottlesToShow);
-                this.deleteAfterCollected(this.level.bottles, bottle);
-                this.bottlesBar.COLLECTING_SOUND.volume = 0.3;
-                this.bottlesBar.COLLECTING_SOUND.play();
-            }
-        })
-    }
-    deleteChicken(enemy){
+    deleteChickenAfterCollision(enemy){
         enemy.energy -= 100;
+        enemy.CHICKEN_DEAD_SOUND.volume = playSoundVolume();
         enemy.CHICKEN_DEAD_SOUND.play();
+    }
+    deleteBottleAfterCollision(bottle) {
+        bottle.bottleDestroyed = true;
+        bottle.splash();
     }
 
     deleteAfterCollected(object, item) {

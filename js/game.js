@@ -4,6 +4,7 @@ let world;
 let globalVolume = 0.2;
 let intervalIds = [];
 gameStop = false;
+gameMute = false;
 
 BACKGROUND_MUSIC = new Audio('audio/Background-music.mp3');
 GAMEOVER_MUSIC = new Audio('audio/game-over.mp3');
@@ -139,16 +140,24 @@ function loadMobileControlEvents() {
         keyboard.SPACE = false;
     });
 }
-
+function playSoundVolume(){
+    if (gameMute) {
+        return 0;
+    } else {
+        return 0.3;
+    }
+}
 
 function mute() {
     let muteImg = document.getElementById('mute-img');
     if (globalVolume == 0) {
         globalVolume = 0.2;
         muteImg.src = 'img/ICONS/speaker-48.png';
+        gameMute = false;
     } else {
         globalVolume = 0;
         muteImg.src = 'img/ICONS/mute-2-48.png';
+        gameMute = true;
     }
     BACKGROUND_MUSIC.volume = globalVolume;
     GAMEOVER_MUSIC.volume = globalVolume;

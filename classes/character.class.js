@@ -58,7 +58,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
-    
+
     height = 240;
     width = 150;
     y = 190;
@@ -117,13 +117,13 @@ class Character extends MovableObject {
         setStoppableInterval(this.moveRightFn.bind(this), 1000 / 60);
         setStoppableInterval(this.moveLeftFn.bind(this), 1000 / 60);
         setStoppableInterval(this.jumpFn.bind(this), 1000 / 60);
-        
+
         setStoppableInterval(() => {
             this.World.camera_x = -this.x + 50;
         }, 1000 / 60);
-        
+
         setStoppableInterval(() => {
-           WALKING_SOUND.pause();
+            WALKING_SOUND.pause();
         }, 200);
 
         setStoppableInterval(() => {
@@ -134,8 +134,8 @@ class Character extends MovableObject {
                 this.gameOver = true;
                 this.playAnimation(this.IMAGES_DEAD);
                 setInterval(() => {
-                    this.y+=6; 
-                },1000/60);
+                    this.y += 6;
+                }, 1000 / 60);
 
             } else if (this.isHurt()) {
                 this.state = "HURT";
@@ -145,16 +145,24 @@ class Character extends MovableObject {
                     this.state = "JUMPING";
                     this.currrentImage = 0;
                 }
-                if (this.currrentImage < 7) {
+                if (this.currrentImage < 7 && this.isAboveGround()) {
                     this.playAnimation(this.IMAGES_JUMPING);
                 }
             } else if (this.World.keyboard.RIGHT || this.World.keyboard.LEFT) {
                 this.state = "WALKING";
                 this.playAnimation(this.IMAGES_PEPE_WALKING);
             }
+            if (!this.World.keyboard.RIGHT && !this.World.keyboard.LEFT && !this.isJumping && !this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_IDLE);
+                this.state = "IDLE";
+            }
         }, 100);
 
         setStoppableInterval(() => {
+            let passedTime = new Date().getTime() - this.time;
+            passedTime = passedTime / 1000;
+
+            
             if (
                 !this.World.keyboard.RIGHT ||
                 !this.World.keyboard.LEFT ||
@@ -169,18 +177,13 @@ class Character extends MovableObject {
                     this.time = new Date().getTime(); // Zeit zurücksetzen
                 }
 
-                let passedTime = new Date().getTime() - this.time;
-                passedTime = passedTime / 1000;
-
                 if (passedTime > 4) {
-                    this.playAnimation(this.IMAGES_IDLE);
-                    this.state = "IDLE";
-                }
-                if (passedTime > 8) {
                     this.playAnimation(this.IMAGES_LONG_IDLE);
                     this.state = "IDLE";
                 }
+
             }
+
         }, 1000);
     }
 }

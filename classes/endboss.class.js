@@ -80,12 +80,13 @@ class Endboss extends MovableObject {
             }
             if (this.isHurt()) {
                     this.playAnimation(this.IMAGES_ENDBOSS_HURT);
-                    this.ENDBOSSDEAD_SOUND.currentTime=4;
+                    this.ENDOSSHURT_SOUND.volume = playSoundVolume();
                     this.ENDOSSHURT_SOUND.play();
             }
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_ENDBOSS_DEAD)
                 this.gameOver = true;
+                this.ENDBOSSDEAD_SOUND.volume = playSoundVolume();
                 this.ENDBOSSDEAD_SOUND.play();
             }
             i++;
