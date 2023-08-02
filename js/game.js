@@ -40,13 +40,12 @@ function init() {
     loadMobileControlEvents();
 }
 function showStartScreen() {
-    document.getElementById('start-screen').classList.add('d-none');
+    let muteBtn = document.getElementById('mute-btn');
+    let fullscreenBtn = document.getElementById('fullscreen-btn');
+    fullscreenBtn.style.cssText = 'background: content-box; right: 5px;'
+    muteBtn.style.cssText = 'background: content-box; right: 70px; left: unset;';
     document.getElementById('overlay').classList.add('d-none');
-    document.getElementById('fullscreen-btn').style.background = 'content-box';
-    document.getElementById('fullscreen-btn').style.right = '5px';
-    document.getElementById('mute-btn').style.background = 'content-box';
-    document.getElementById('mute-btn').style.right = '70px';
-    document.getElementById('mute-btn').style.left = 'unset';
+    document.getElementById('start-screen').classList.add('d-none');
 }
 
 function startGame() {
@@ -64,83 +63,8 @@ function initGame() {
 
     console.log('My Character is', world.character)
 }
-function loadDesktopControlEvents() {
-    window.addEventListener("keydown", (e) => {
-        if (e.keyCode == 37) {
-            keyboard.LEFT = true;
-        }
-        if (e.keyCode == 38) {
-            keyboard.UP = true;
-        }
-        if (e.keyCode == 39) {
-            keyboard.RIGHT = true;
-        }
-        if (e.keyCode == 40) {
-            keyboard.DOWN = true;
-        }
-        if (e.keyCode == 32 && !keyboard.SPACE) {
-            keyboard.SPACE = true;
-            world.checkThrowObject();
-        }
-    });
 
-    window.addEventListener("keyup", (e) => {
-        if (e.keyCode == 37) {
-            keyboard.LEFT = false;
-        }
-        if (e.keyCode == 38) {
-            keyboard.UP = false;
-        }
-        if (e.keyCode == 39) {
-            keyboard.RIGHT = false;
-        }
-        if (e.keyCode == 40) {
-            keyboard.DOWN = false;
-        }
-        if (e.keyCode == 32) {
-            keyboard.SPACE = false;
-        }
-    });
-}
-
-function loadMobileControlEvents() {
-    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = true;
-    });
-    document.getElementById('btnRight').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.RIGHT = false;
-    });
-    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = true;
-    });
-    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.LEFT = false;
-    });
-    document.getElementById('btnUp').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        keyboard.UP = true;
-    });
-    document.getElementById('btnUp').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.UP = false;
-    });
-    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        if (!keyboard.SPACE) {
-            keyboard.SPACE = true;
-            world.checkThrowObject();
-        }
-    });
-    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        keyboard.SPACE = false;
-    });
-}
-function playSoundVolume(){
+function playSoundVolume() {
     if (gameMute) {
         return 0;
     } else {
@@ -159,6 +83,9 @@ function mute() {
         muteImg.src = 'img/ICONS/mute-2-48.png';
         gameMute = true;
     }
+    setVolumeOfSounds(globalVolume);
+}
+function setVolumeOfSounds(globalVolume) {
     BACKGROUND_MUSIC.volume = globalVolume;
     GAMEOVER_MUSIC.volume = globalVolume;
     GAMEWON_MUSIC.volume = globalVolume;
@@ -206,17 +133,20 @@ function detectPhonePosition() {
         document.getElementById('rotate-device').classList.add('d-none');
         document.getElementById('tutorial').classList.remove('d-none');
         document.getElementById('overlay-bottom').classList.add('d-none');
-        if (window.innerWidth < 1000) {
-            document.getElementById('tutorial').classList.add('d-none');
-            if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
-                document.getElementById('overlay-bottom').classList.remove('d-none');
-
-            } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
-                document.getElementById('overlay-bottom').classList.add('d-none');
-                document.getElementById('rotate-device').classList.remove('d-none');
-            }
-        }
+        addResponsiveDesign();
     });
+}
+function addResponsiveDesign(){
+    if (window.innerWidth < 1000) {
+        document.getElementById('tutorial').classList.add('d-none');
+        if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
+            document.getElementById('overlay-bottom').classList.remove('d-none');
+
+        } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
+            document.getElementById('overlay-bottom').classList.add('d-none');
+            document.getElementById('rotate-device').classList.remove('d-none');
+        }
+    }
 }
 
 function showGameOver() {

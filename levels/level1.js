@@ -74,7 +74,7 @@ function initLevel() {
             new Bottles(500),
             new Bottles(1500),
             new Bottles(2000),
-            new Bottles(200),
+            new Bottles(250),
             new Bottles(750),
             new Bottles(2500),
             new Bottles(1800),

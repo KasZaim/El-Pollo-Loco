@@ -15,8 +15,15 @@ class ThrowableObjects extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
     bottleDestroyed = false;
+    offset = {
+        x: 20,
+        y: 20,
+        width: 28,
+        height: 5
+    };
+    flipBottle;
 
-    constructor(x, y) {
+    constructor(x, y,otherDirection) {
         super().loadImg('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES);
         this.loadImages(this.IMAGE_SPLASH);
@@ -26,17 +33,25 @@ class ThrowableObjects extends MovableObject {
         this.width = 90;
         this.throw();
         this.acceleration = 3;
+        this.flipBottle = otherDirection;
     }
 
     throw() {
-        this.speedY = 22;
+        this.speedY = 20 ;
         this.applyGravity();
         this.animate();
+        
     }
 
     animate() {
-        this.x += 5;
-        this.playAnimation(this.IMAGES)
+        if (this.flipBottle) {
+            this.x -= 5;
+            this.playAnimation(this.IMAGES)
+        }else{
+            this.x += 5;
+            this.playAnimation(this.IMAGES)
+        }
+        
         if (this.bottleDestroyed) {
             this.splash();
             
