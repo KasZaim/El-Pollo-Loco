@@ -50,7 +50,7 @@ function clearAllIntervals() {
  * Initializes the game by detecting the device type and loading the respective control events.
  */
 function init() {
-    detectPhonePosition();
+    // detectPhonePosition();
     loadDesktopControlEvents();
     loadMobileControlEvents();
 }
@@ -64,6 +64,8 @@ function showStartScreen() {
     muteBtn.style.cssText = 'background: content-box; right: 70px; left: unset;';
     document.getElementById('overlay').classList.add('d-none');
     document.getElementById('start-screen').classList.add('d-none');
+    document.getElementById('overlay-bottom').style.display='flex';
+    
 }
 /**
  * Starts the game by initializing the level, game, and playing the background music.
@@ -167,29 +169,29 @@ function toggleFullScreen() {
 /**
  * Detects the phone's orientation and adds responsive design elements based on the screen size and orientation.
  */
-function detectPhonePosition() {
-    window.addEventListener("resize", function () {
-        document.getElementById('rotate-device').classList.add('d-none');
-        document.getElementById('tutorial').classList.remove('d-none');
-        document.getElementById('overlay-bottom').classList.add('d-none');
-        addResponsiveDesign();
-    });
-}
+// function detectPhonePosition() {
+//     window.addEventListener("resize", function () {
+//         document.getElementById('rotate-device').classList.add('d-none');
+//         document.getElementById('tutorial').classList.remove('d-none');
+//         document.getElementById('overlay-bottom').classList.add('d-none');
+//         addResponsiveDesign();
+//     });
+// }
 /**
  * Adds responsive design elements based on the screen size and orientation.
  */
-function addResponsiveDesign(){
-    if (window.innerWidth < 1000) {
-        document.getElementById('tutorial').classList.add('d-none');
-        if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
-            document.getElementById('overlay-bottom').classList.remove('d-none');
+// function addResponsiveDesign(){
+//     if (window.innerWidth < 1000) {
+//         document.getElementById('tutorial').classList.add('d-none');
+//         if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
+//             document.getElementById('overlay-bottom').classList.remove('d-none');
 
-        } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
-            document.getElementById('overlay-bottom').classList.add('d-none');
-            document.getElementById('rotate-device').classList.remove('d-none');
-        }
-    }
-}
+//         } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
+//             document.getElementById('overlay-bottom').classList.add('d-none');
+//             document.getElementById('rotate-device').classList.remove('d-none');
+//         }
+//     }
+// }
 /**
  * Shows the game over screen based on whether the character has won or lost the game.
  */
@@ -197,10 +199,12 @@ function showGameOver() {
     BACKGROUND_MUSIC.pause();
     GAMEOVER_MUSIC.currentTime = 13;
     GAMEOVER_MUSIC.volume = globalVolume;
+    document.getElementById('overlay-bottom').classList.add('d-none')
     if (world.character.gameOver) {
         showGameLostScreen();
     } else {
         showYouWonScreen();
+        
     }
     gameStop = true;
 }

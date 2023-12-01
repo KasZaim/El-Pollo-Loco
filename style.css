@@ -162,7 +162,7 @@ canvas {
     width: 90px;
 }
 .overlay-bottom {
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     position: absolute;
@@ -191,7 +191,7 @@ canvas {
     width: 100px;
     height: 50px;
     position: absolute;
-    bottom: 30px;
+    bottom: 10px;
     border: 2px #a75f39 solid;
     font-size: 28px;
     padding: 5px;
@@ -209,14 +209,15 @@ canvas {
 }
 
 .rotate-device {
-    width: 100vw;
-    height: 100vh;
     position: fixed;
     top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     z-index: 20;
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -227,6 +228,7 @@ canvas {
     font-size: 24px;
     gap: 20px;
 }
+
 
 .rotate-device img {
     height: 100px;
@@ -290,11 +292,26 @@ canvas {
 
 
 @media (max-width: 1050px) {
-    body {
-        height: 100vh;
-    }
 
+}
+@media only screen and (max-width: 750px) {
+    .rotate-device{
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 800px) and (orientation: landscape) {
+    .rotate-device {
+        display: none;
+    }
     h1 {
         display: none !important;
     }
+    .tutorial{
+        display: none;
+    }
+    h1 {
+        display: none !important;
+    }
+    
 }
