@@ -167,8 +167,8 @@ canvas {
     align-items: center;
     position: absolute;
     z-index: 10;
-    bottom: 25px;
-    width: 100%;
+    bottom: 0px;
+    width: 70%;
 }
 
 .control-buttons {
