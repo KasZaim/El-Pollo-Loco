@@ -64,7 +64,6 @@ function showStartScreen() {
     muteBtn.style.cssText = 'background: content-box; right: 70px; left: unset;';
     document.getElementById('overlay').classList.add('d-none');
     document.getElementById('start-screen').classList.add('d-none');
-    document.getElementById('overlay-bottom').style.display='flex';
     
 }
 /**
@@ -76,7 +75,9 @@ function startGame() {
     showStartScreen();
     BACKGROUND_MUSIC.volume = globalVolume;
     BACKGROUND_MUSIC.play();
-
+    if (window.innerWidth <= 750 ) {
+        document.getElementById('overlay-bottom').style.display = 'flex';
+    }
 }
 /**
  * Initializes the game and sets the canvas and world.
@@ -131,6 +132,7 @@ function setVolumeOfSounds(globalVolume) {
  */
 function openFullScreen() {
     let content = document.getElementById('content');
+    let canvas = document.getElementById('canvas');
     if (content.requestFullscreen) {
         content.requestFullscreen();
     } else if (content.mozRequestFullScreen) {
@@ -140,6 +142,8 @@ function openFullScreen() {
     } else if (content.msRequestFullscreen) {
         content.msRequestFullscreen();
     }
+    canvas.style.height = window.outerHeight +'px' ;
+    canvas.style.width = window.outerWidth +'px';
 }
 /**
  * Exits the fullscreen mode if it's active.
