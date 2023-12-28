@@ -166,35 +166,7 @@ function toggleFullScreen() {
         fullscreenIcon.src = "img/ICONS/fullscreen-exit-48.png";
     }
 }
-/**
- * Detects the phone's orientation and adds responsive design elements based on the screen size and orientation.
- */
-// function detectPhonePosition() {
-//     window.addEventListener("resize", function () {
-//         document.getElementById('rotate-device').classList.add('d-none');
-//         document.getElementById('tutorial').classList.remove('d-none');
-//         document.getElementById('overlay-bottom').classList.add('d-none');
-//         addResponsiveDesign();
-//     });
-// }
-/**
- * Adds responsive design elements based on the screen size and orientation.
- */
-// function addResponsiveDesign(){
-//     if (window.innerWidth < 1000) {
-//         document.getElementById('tutorial').classList.add('d-none');
-//         if (window.matchMedia("(orientation: landscape)").matches && window.innerWidth < 950) {
-//             document.getElementById('overlay-bottom').classList.remove('d-none');
 
-//         } else if (window.matchMedia("(orientation: portrait)").matches && window.innerWidth < 950) {
-//             document.getElementById('overlay-bottom').classList.add('d-none');
-//             document.getElementById('rotate-device').classList.remove('d-none');
-//         }
-//     }
-// }
-/**
- * Shows the game over screen based on whether the character has won or lost the game.
- */
 function showGameOver() {
     BACKGROUND_MUSIC.pause();
     GAMEOVER_MUSIC.currentTime = 13;
